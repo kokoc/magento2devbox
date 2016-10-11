@@ -5,6 +5,14 @@ if (Test-Path data/ports) {
     Remove-Item data/ports -Force
 }
 
+if (Get-Variable magento_home_path) {
+    clear-variable -name magento_home_path
+}
+
+if (Get-Variable magento_sources_reuse) {
+    clear-variable -name magento_sources_reuse
+}
+
 function generate_container_name ($service, $number = 1, $name="magento2devbox_${service}_${number}") {
     while (docker ps -a -q --filter="name=$name") {
         $number++
@@ -104,7 +112,7 @@ function request ($varName, $question, $isBoolean, $defaultValue, $value, $outpu
         }
     }
 
-    Set-Variable -Name $varName -Value $value -Scope Global
+    Set-Variable -Name $varName -Value $value -Scope Script
     return $output | Out-Null
 }
 
@@ -205,7 +213,7 @@ if ($Args.Length -gt 0) {
                         $value = $matches[2]
                     }
 
-                    Set-Variable -Name $var_name -Value $value -Scope Global
+                    Set-Variable -Name $var_name -Value $value -Scope Script
                     store_option $key $value | Out-Null
                 }
             default { echo "Error: Unexpected argument $argument!" }
@@ -226,7 +234,7 @@ if ($magento_home_path) {
 
         request 'magento_home_path' 'Please provide full path to the Magento sources on local machine' 0 $magento_default_home_path
 
-        if (!magento_home_path) {
+        if (!$magento_home_path) {
             echo "Error: Magento folder was not specified!"
         }
     }
