@@ -182,7 +182,7 @@ $webserver_home_apache_logs_path = './shared/logs/apache2'
 $webserver_home_phpfpm_logs_path = './shared/logs/php-fpm'
 
 #Magento
-$magento_host = store_option 'magento-host' 'localhost'
+$magento_host = store_option 'magento-host' '127.0.0.1'
 $magento_path = store_option 'magento-path' '/var/www/magento2'
 $magento_cloud_path = '/root/.magento-cloud'
 $magento_cloud_home_path = './shared/.magento-cloud'
