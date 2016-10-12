@@ -5,11 +5,11 @@ if (Test-Path data/ports) {
     Remove-Item data/ports -Force
 }
 
-if (Get-Variable magento_home_path) {
+if ($magento_home_path -ne $null) {
     clear-variable -name magento_home_path
 }
 
-if (Get-Variable magento_sources_reuse) {
+if ($magento_sources_reuse -ne $null) {
     clear-variable -name magento_sources_reuse
 }
 
