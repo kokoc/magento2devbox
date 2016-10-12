@@ -399,4 +399,4 @@ ssh -p$webserver_home_ssh_port magento2@127.0.0.1 /usr/local/bin/php -dxdebug.re
     \$2
 EOM
 
-chmod +x debug-test.sh
+chmod +x m2devbox-debug-test.sh
