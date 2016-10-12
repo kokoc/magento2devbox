@@ -258,7 +258,7 @@ services:
       container_name: %%%WEBSERVER_CONTAINER%%%
       restart: always
 #     image: magento/magento2devbox_web:latest
-      build: web
+      build: ../magento2devbox-web
       volumes:
           - "%%%MAGENTO_HOME_PATH%%%:%%%MAGENTO_PATH%%%"
           - "%%%COMPOSER_HOME_PATH%%%:%%%COMPOSER_PATH%%%"
@@ -291,7 +291,7 @@ services:
         depends_on:
            - %%%WEBSERVER_HOST%%%
   #     image: magento/magento2devbox_varnish:latest
-        build: varnish
+        build: ../magento2devbox-varnish
         volumes:
             - "%%%VARNISH_HOME_PATH%%%:%%%VARNISH_CONTAINER_CONFIG_PATH%%%"
         ports:
