@@ -195,7 +195,7 @@ webserver_home_apache_logs_path='./shared/logs/apache2'
 webserver_home_phpfpm_logs_path='./shared/logs/php-fpm'
 
 #Magento
-magento_host=$(store_option 'magento-host' 'localhost')
+magento_host=$(store_option 'magento-host' '127.0.0.1')
 magento_path=$(store_option 'magento-path' '/var/www/magento2')
 magento_path_shared='/home/magento2/magento2'
 magento_cloud_path='/root/.magento-cloud'
@@ -270,8 +270,8 @@ services:
   $webserver_host:
     container_name: $webserver_container
     restart: always
-    image: magento/magento2devbox_web:latest
-#    build: web
+#    image: magento/magento2devbox_web:latest
+    build: ../magento2devbox-web
     volumes:
       - "$magento_home_path:$magento_path_shared"
       - "$composer_home_path:$composer_path"
@@ -303,8 +303,8 @@ services:
     restart: always
     depends_on:
       - "$webserver_host"
-    image: magento/magento2devbox_varnish:latest
-#    build: varnish
+#    image: magento/magento2devbox_varnish:latest
+    build: ../magento2devbox-varnish
     volumes:
       - "$varnish_home_path:$varnish_container_config_path"
     ports:

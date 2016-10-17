@@ -5,6 +5,14 @@ if (Test-Path data/ports) {
     Remove-Item data/ports -Force
 }
 
+if ($magento_home_path -ne $null) {
+    clear-variable -name magento_home_path
+}
+
+if ($magento_sources_reuse -ne $null) {
+    clear-variable -name magento_sources_reuse
+}
+
 function generate_container_name ($service, $number = 1, $name="magento2devbox_${service}_${number}") {
     while (docker ps -a -q --filter="name=$name") {
         $number++
@@ -104,7 +112,7 @@ function request ($varName, $question, $isBoolean, $defaultValue, $value, $outpu
         }
     }
 
-    Set-Variable -Name $varName -Value $value -Scope Global
+    Set-Variable -Name $varName -Value $value -Scope Script
     return $output | Out-Null
 }
 
@@ -174,7 +182,7 @@ $webserver_home_apache_logs_path = './shared/logs/apache2'
 $webserver_home_phpfpm_logs_path = './shared/logs/php-fpm'
 
 #Magento
-$magento_host = store_option 'magento-host' 'localhost'
+$magento_host = store_option 'magento-host' '127.0.0.1'
 $magento_path = store_option 'magento-path' '/var/www/magento2'
 $magento_cloud_path = '/root/.magento-cloud'
 $magento_cloud_home_path = './shared/.magento-cloud'
@@ -205,7 +213,7 @@ if ($Args.Length -gt 0) {
                         $value = $matches[2]
                     }
 
-                    Set-Variable -Name $var_name -Value $value -Scope Global
+                    Set-Variable -Name $var_name -Value $value -Scope Script
                     store_option $key $value | Out-Null
                 }
             default { echo "Error: Unexpected argument $argument!" }
@@ -226,7 +234,7 @@ if ($magento_home_path) {
 
         request 'magento_home_path' 'Please provide full path to the Magento sources on local machine' 0 $magento_default_home_path
 
-        if (!magento_home_path) {
+        if (!$magento_home_path) {
             echo "Error: Magento folder was not specified!"
         }
     }
@@ -249,8 +257,8 @@ services:
   %%%WEBSERVER_HOST%%%:
       container_name: %%%WEBSERVER_CONTAINER%%%
       restart: always
-      image: magento/magento2devbox_web:latest
-#      build: web
+#     image: magento/magento2devbox_web:latest
+      build: ../magento2devbox-web
       volumes:
           - "%%%MAGENTO_HOME_PATH%%%:%%%MAGENTO_PATH%%%"
           - "%%%COMPOSER_HOME_PATH%%%:%%%COMPOSER_PATH%%%"
@@ -282,8 +290,8 @@ services:
         restart: always
         depends_on:
            - %%%WEBSERVER_HOST%%%
-        image: magento/magento2devbox_varnish:latest
-#        build: varnish
+  #     image: magento/magento2devbox_varnish:latest
+        build: ../magento2devbox-varnish
         volumes:
             - "%%%VARNISH_HOME_PATH%%%:%%%VARNISH_CONTAINER_CONFIG_PATH%%%"
         ports:
