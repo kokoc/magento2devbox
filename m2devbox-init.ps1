@@ -441,3 +441,4 @@ clear-variable -name magento_sources_reuse
 
 docker exec -it --privileged -u root $webserver_container chown -R magento2:magento2 .ssh .composer
 Invoke-Expression ".\m2devbox.ps1 exec php -f /home/magento2/scripts/m2init magento:install $options"
+docker-compose restart $varnish_host

@@ -380,6 +380,8 @@ fi
 rm -f data/ports
 ./m2devbox.sh exec php -f /home/magento2/scripts/m2init magento:install $options
 
+docker-compose restart $varnish_host
+
 cat > m2devbox-debug-test.sh <<- EOM
 #!/bin/bash
 
