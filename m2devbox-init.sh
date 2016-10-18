@@ -133,7 +133,7 @@ request () {
 
 if [ -f docker-compose.yml ]; then
     echo 'Stopping current containers'
-    docker stop $(docker-compose ps -q) >> /dev/null
+    docker stop $(docker-compose ps -q) &> /dev/null
 fi
 
 echo 'Creating docker-compose config'
@@ -270,8 +270,8 @@ services:
   $webserver_host:
     container_name: $webserver_container
     restart: always
-#    image: magento/magento2devbox_web:latest
-    build: ../magento2devbox-web
+    image: magento/magento2devbox_web:develop
+#    build: ../magento2devbox-web
     volumes:
       - "$magento_home_path:$magento_path_shared"
       - "$composer_home_path:$composer_path"
@@ -303,8 +303,8 @@ services:
     restart: always
     depends_on:
       - "$webserver_host"
-#    image: magento/magento2devbox_varnish:latest
-    build: ../magento2devbox-varnish
+    image: magento/magento2devbox_varnish:develop
+#    build: ../magento2devbox-varnish
     volumes:
       - "$varnish_home_path:$varnish_container_config_path"
     ports:
