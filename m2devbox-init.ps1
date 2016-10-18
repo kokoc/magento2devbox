@@ -255,64 +255,64 @@ $yml = @"
 version: '2'
 services:
   %%%WEBSERVER_HOST%%%:
-      container_name: %%%WEBSERVER_CONTAINER%%%
-      restart: always
-#     image: magento/magento2devbox_web:latest
-      build: ../magento2devbox-web
-      volumes:
-          - "%%%MAGENTO_HOME_PATH%%%:%%%MAGENTO_PATH%%%"
-          - "%%%COMPOSER_HOME_PATH%%%:%%%COMPOSER_PATH%%%"
-          - "%%%SSH_HOME_PATH%%%:%%%SSH_PATH%%%"
-          - "%%%WEBSERVER_HOME_APACHE_LOGS_PATH%%%:%%%WEBSERVER_APACHE_LOGS_PATH%%%"
-          - "%%%WEBSERVER_HOME_PHPFPM_LOGS_PATH%%%:%%%WEBSERVER_PHPFPM_LOGS_PATH%%%"
-          - "%%%VARNISH_HOME_PATH%%%:%%%VARNISH_CONFIG_DIR%%%"
-          - "%%%MAGENTO_CLOUD_HOME_PATH%%%:%%%MAGENTO_CLOUD_PATH%%%"
-      environment:
-          - USE_SHARED_WEBROOT=1
-          - SHARED_CODE_PATH="%%%MAGENTO_PATH%%%"
-      ports:
-          - "%%%WEBSERVER_HOME_PORT%%%:%%%WEBSERVER_PORT%%%"
-          - "%%%WEBSERVER_HOME_SSH_PORT%%%:%%%WEBSERVER_SSH_PORT%%%"
+    container_name: %%%WEBSERVER_CONTAINER%%%
+    restart: always
+#    image: magento/magento2devbox_web:latest
+    build: ../magento2devbox-web
+    volumes:
+      - "%%%MAGENTO_HOME_PATH%%%:%%%MAGENTO_PATH%%%"
+      - "%%%COMPOSER_HOME_PATH%%%:%%%COMPOSER_PATH%%%"
+      - "%%%SSH_HOME_PATH%%%:%%%SSH_PATH%%%"
+      - "%%%WEBSERVER_HOME_APACHE_LOGS_PATH%%%:%%%WEBSERVER_APACHE_LOGS_PATH%%%"
+      - "%%%WEBSERVER_HOME_PHPFPM_LOGS_PATH%%%:%%%WEBSERVER_PHPFPM_LOGS_PATH%%%"
+      - "%%%VARNISH_HOME_PATH%%%:%%%VARNISH_CONFIG_DIR%%%"
+      - "%%%MAGENTO_CLOUD_HOME_PATH%%%:%%%MAGENTO_CLOUD_PATH%%%"
+    environment:
+      - USE_SHARED_WEBROOT=1
+      - SHARED_CODE_PATH="%%%MAGENTO_PATH%%%"
+    ports:
+      - "%%%WEBSERVER_HOME_PORT%%%:%%%WEBSERVER_PORT%%%"
+      - "%%%WEBSERVER_HOME_SSH_PORT%%%:%%%WEBSERVER_SSH_PORT%%%"
   %%%DB_HOST%%%:
-      container_name: %%%DB_CONTAINER%%%
-      restart: always
-      image: mysql:5.6
-      ports:
-          - "%%%DB_HOME_PORT%%%:%%%DB_PORT%%%"
-      environment:
-          - MYSQL_ROOT_PASSWORD=%%%DB_PASSWORD%%%
-          - MYSQL_DATABASE=%%%DB_NAME%%%
-      volumes:
-          - "%%%DB_HOME_PATH%%%:%%%DB_PATH%%%"
-          - "%%%DB_HOME_LOGS_PATH%%%:%%%DB_LOGS_PATH%%%"
+    container_name: %%%DB_CONTAINER%%%
+    restart: always
+    image: mysql:5.6
+    ports:
+      - "%%%DB_HOME_PORT%%%:%%%DB_PORT%%%"
+    environment:
+      - MYSQL_ROOT_PASSWORD=%%%DB_PASSWORD%%%
+      - MYSQL_DATABASE=%%%DB_NAME%%%
+    volumes:
+      - "%%%DB_HOME_PATH%%%:%%%DB_PATH%%%"
+      - "%%%DB_HOME_LOGS_PATH%%%:%%%DB_LOGS_PATH%%%"
   %%%VARNISH_HOST%%%:
-        container_name: %%%VARNISH_CONTAINER%%%
-        restart: always
-        depends_on:
-           - %%%WEBSERVER_HOST%%%
-  #     image: magento/magento2devbox_varnish:latest
-        build: ../magento2devbox-varnish
-        volumes:
-            - "%%%VARNISH_HOME_PATH%%%:%%%VARNISH_CONTAINER_CONFIG_PATH%%%"
-        ports:
-            - "%%%VARNISH_HOME_PORT%%%:%%%VARNISH_PORT%%%"
+    container_name: %%%VARNISH_CONTAINER%%%
+    restart: always
+    depends_on:
+      - %%%WEBSERVER_HOST%%%
+#    image: magento/magento2devbox_varnish:latest
+    build: ../magento2devbox-varnish
+    volumes:
+      - "%%%VARNISH_HOME_PATH%%%:%%%VARNISH_CONTAINER_CONFIG_PATH%%%"
+    ports:
+      - "%%%VARNISH_HOME_PORT%%%:%%%VARNISH_PORT%%%"
   %%%REDIS_HOST%%%:
-        container_name: %%%REDIS_CONTAINER%%%
-        restart: always
-        image: redis:3.0.7
+    container_name: %%%REDIS_CONTAINER%%%
+    restart: always
+    image: redis:3.0.7
   %%%RABBITMQ_HOST%%%:
-      container_name: %%%RABBITMQ_CONTAINER%%%
-      restart: always
-      image: rabbitmq:3-management
-      ports:
-          - "%%%RABBITMQ_HOME_ADMIN_PORT%%%:%%%RABBITMQ_ADMIN_PORT%%%"
-          - "%%%RABBITMQ_HOME_PORT%%%:%%%RABBITMQ_PORT%%%"
+    container_name: %%%RABBITMQ_CONTAINER%%%
+    restart: always
+    image: rabbitmq:3-management
+    ports:
+     - "%%%RABBITMQ_HOME_ADMIN_PORT%%%:%%%RABBITMQ_ADMIN_PORT%%%"
+     - "%%%RABBITMQ_HOME_PORT%%%:%%%RABBITMQ_PORT%%%"
   %%%ELASTIC_HOST%%%:
-      container_name: %%%ELASTIC_CONTAINER%%%
-      restart: always
-      image: elasticsearch:latest
-      ports:
-          - "%%%ELASTIC_HOME_PORT%%%:%%%ELASTIC_PORT%%%"
+    container_name: %%%ELASTIC_CONTAINER%%%
+    restart: always
+    image: elasticsearch:latest
+    ports:
+      - "%%%ELASTIC_HOME_PORT%%%:%%%ELASTIC_PORT%%%"
 "@
 
 $yml = $yml -Replace "%%%WEBSERVER_HOST%%%", $webserver_host
