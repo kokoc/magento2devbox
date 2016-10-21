@@ -11,7 +11,7 @@ services:
     image: magento/magento2devbox_web:latest
 #    build: ../../magento2devbox-web
     volumes:
-      - "../shared/webroot:/home/magento2/magento2"
+      - "../shared/webroot:/var/www/magento2"
       - "../shared/.composer:/home/magento2/.composer"
       - "../shared/.ssh:/home/magento2/.ssh"
       - "../shared/logs/apache2:/var/log/apache2"
@@ -20,7 +20,7 @@ services:
       - "../shared/.magento-cloud:/root/.magento-cloud"
     environment:
       - USE_SHARED_WEBROOT=0
-      - SHARED_CODE_PATH="/home/magento2/magento2"
+      - SHARED_CODE_PATH="/var/www/magento2"
     ports:
       - "52880:80"
       - "14631:22"
