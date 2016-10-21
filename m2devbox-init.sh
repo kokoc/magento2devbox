@@ -270,7 +270,7 @@ services:
   $webserver_host:
     container_name: $webserver_container
     restart: always
-    image: magento/magento2devbox_web:develop
+    image: magento/magento2devbox_web:latest
 #    build: ../magento2devbox-web
     volumes:
       - "$magento_home_path:$magento_path_shared"
@@ -303,7 +303,7 @@ services:
     restart: always
     depends_on:
       - "$webserver_host"
-    image: magento/magento2devbox_varnish:develop
+    image: magento/magento2devbox_varnish:latest
 #    build: ../magento2devbox-varnish
     volumes:
       - "$varnish_home_path:$varnish_container_config_path"
