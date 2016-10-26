@@ -303,9 +303,9 @@ services:
     restart: always
     depends_on:
       - "$webserver_host"
-    image: magento/magento2devbox_varnish:develop
+#    image: magento/magento2devbox_varnish:develop
     build: ../magento2devbox-varnish
-#    volumes:
+    volumes:
       - "$varnish_home_path:$varnish_container_config_path"
     ports:
       - "$varnish_home_port:$varnish_port"
