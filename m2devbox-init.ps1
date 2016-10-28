@@ -269,7 +269,8 @@ services:
       - "%%%MAGENTO_CLOUD_HOME_PATH%%%:%%%MAGENTO_CLOUD_PATH%%%"
     environment:
       - USE_SHARED_WEBROOT=1
-      - SHARED_CODE_PATH="%%%MAGENTO_PATH%%%"
+      - SHARED_CODE_PATH=%%%MAGENTO_PATH%%%
+      - MAGENTO_STATIC_CONTENTS_DEPLOY=1
     ports:
       - "%%%WEBSERVER_HOME_PORT%%%:%%%WEBSERVER_PORT%%%"
       - "%%%WEBSERVER_HOME_SSH_PORT%%%:%%%WEBSERVER_SSH_PORT%%%"
@@ -439,6 +440,5 @@ if (Test-Path data/ports) {
 clear-variable -name magento_home_path
 clear-variable -name magento_sources_reuse
 
-docker exec -it --privileged -u root $webserver_container chown -R magento2:magento2 .ssh .composer
 Invoke-Expression ".\m2devbox.ps1 exec php -f /home/magento2/scripts/m2init magento:install $options"
 docker-compose restart $varnish_host

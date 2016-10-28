@@ -6,9 +6,9 @@
 - For Windows Shared Drivers in Docker Settings should be enabled
 
 ## Installation (Windows 10)
-1. Clone this repository && run `cd magento2-dev-box` in terminal
+1. Clone this repository && run `cd magento2devbox` in terminal
 2. Run `.\m2devbox-init.ps1` in PowerShell - during command execution you will be asked for your magento repo credentials
-3. Open in browser http://127.0.0.1:1748/
+3. Open in browser http://127.0.0.1:1749/
 
 ## Configuring PhpStorm
 :information_source: We suggest to make magento2-dev-box directory as your project directory in PhpStorm
@@ -19,7 +19,7 @@ If you want to configure PhpStorm automatically, run `configure_php_storm` scrip
 1. Create new server to PhpStorm Servers:
    - Name: {{your server name}}
    - Host: 127.0.0.1
-   - Port: 1748
+   - Port: 1749
    - Use path mappings: Yes
    - File/Directory: magento2-dev-box/webroot-> /var/www/magento2
 2. Add PHP Remote Debug to new configurations in PhpStorm:
