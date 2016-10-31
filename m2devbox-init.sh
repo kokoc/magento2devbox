@@ -270,8 +270,8 @@ services:
   $webserver_host:
     container_name: $webserver_container
     restart: always
-    image: magento/magento2devbox_web:develop
-#    build: ../magento2devbox-web
+#    image: magento/magento2devbox_web:develop
+    build: ../magento2devbox-web
     volumes:
       - "$magento_home_path:$magento_path_shared"
       - "$composer_home_path:$composer_path"
@@ -303,8 +303,8 @@ services:
     restart: always
     depends_on:
       - "$webserver_host"
-    image: magento/magento2devbox_varnish:develop
-#    build: ../magento2devbox-varnish
+#    image: magento/magento2devbox_varnish:develop
+    build: ../magento2devbox-varnish
     volumes:
       - "$varnish_home_path:$varnish_container_config_path"
     ports:
@@ -377,10 +377,14 @@ if [[ $interactive != 1 ]]; then
     options="$options --no-interaction"
 fi
 
+# Stop unison before magento installation
+docker-compose exec $webserver_host killall unison
+
 rm -f data/ports
 ./m2devbox.sh exec php -f /home/magento2/scripts/m2init magento:install $options
 
-# docker-compose restart $webserver_host
+docker-compose exec $webserver_host /usr/local/bin/unison.sh
+
 docker-compose restart $varnish_host
 
 cat > m2devbox-debug-test.sh <<- EOM
