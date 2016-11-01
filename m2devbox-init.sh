@@ -377,13 +377,8 @@ if [[ $interactive != 1 ]]; then
     options="$options --no-interaction"
 fi
 
-# Stop unison before magento installation
-docker-compose exec $webserver_host killall unison
-
 rm -f data/ports
 ./m2devbox.sh exec php -f /home/magento2/scripts/m2init magento:install $options
-
-docker-compose exec -d $webserver_host /usr/local/bin/unison.sh
 
 docker-compose restart $varnish_host
 
