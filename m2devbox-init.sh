@@ -236,7 +236,7 @@ else
     magento_home_path='./shared/webroot'
 
     if [[ ! $magento_sources_reuse ]]; then
-        request 'magento_sources_reuse' 'Do you want to use custom location for Magento sources on local machine?' 1
+        request 'magento_sources_reuse' 'Do you want to use custom source code for Magento on local machine?' 1
     fi
 
     if [[ $magento_sources_reuse = 1 ]]; then
@@ -383,7 +383,7 @@ docker-compose exec $webserver_host killall unison
 rm -f data/ports
 ./m2devbox.sh exec php -f /home/magento2/scripts/m2init magento:install $options
 
-docker-compose exec $webserver_host /usr/local/bin/unison.sh
+docker-compose exec -d $webserver_host /usr/local/bin/unison.sh
 
 docker-compose restart $varnish_host
 

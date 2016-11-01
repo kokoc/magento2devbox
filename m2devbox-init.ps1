@@ -227,7 +227,7 @@ if ($magento_home_path) {
     $magento_home_path='./shared/webroot'
 
     if (!$magento_sources_reuse) {
-        request 'magento_sources_reuse' 'Do you want to use custom location for Magento sources on local machine?' 1
+        request 'magento_sources_reuse' 'Do you want to use custom source code for Magento on local machine?' 1
     }
     if ($magento_sources_reuse -eq 1) {
         $magento_default_home_path = get_data 'magento_home_path'
